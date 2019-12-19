@@ -1,3 +1,24 @@
 <resources>
     <string name="app_name">PostBook</string>
+    <string name="postbtn_title">ALL</string>
+    <string name="favbtn_title">FAV</string>
+    <string name="title_activity_post">PostActivity</string>
+    <string name="tab_text_1">Tab 1</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="user_post_tite">My Posts</string>
+    <string name="fav_post_title">Fav Post</string>
+    <string name="no_data_found_text">No Post Available for User</string>
+    <string name="user_comment_title">Comments</string>
+    <string name="internet_not_availabe">Please connect to Internet to proceed.</string>
+    <string name="enter_userid">please enter user id </string>
+    <string name="logout_text">LOGOUT</string>
+    <string name="login_text">LOGIN</string>
+    <string name="unable_tologout">Unable to logout</string>
+    <string name="title">title</string>
+    <string name="email">email</string>
+    <string name="body">body</string>
+    <string name="comment_name">comment name</string>
+    <string name="user_id">User ID:</string>
+    <string name="fav">FAV</string>
+    <string name="all">ALL</string>
 </resources>
