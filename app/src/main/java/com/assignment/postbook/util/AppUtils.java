@@ -12,6 +12,8 @@ public class AppUtils {
     public static final String USER_ALLPOST_FRAGMENT = "ALLPOST_FRAGMENT";
     public static final String USER_FAVPOST_FRAGMENT = "FAVPOST_FRAGMENT";
 
+    public static final String USER_MARK_POST = "FAV_POST_DATA";
+
 
     public boolean isInternetAvailable(Context context) {
         ConnectivityManager cm =

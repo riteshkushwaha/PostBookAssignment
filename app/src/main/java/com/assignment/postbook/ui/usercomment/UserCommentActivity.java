@@ -1,7 +1,9 @@
 package com.assignment.postbook.ui.usercomment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -22,7 +24,7 @@ import java.util.List;
 import static com.assignment.postbook.util.AppUtils.USER_POST_DATA;
 
 
-public class UserCommentActivity extends AppCompatActivity implements CommentPageContract.CommentView {
+public class UserCommentActivity extends AppCompatActivity implements CommentPageContract.CommentView, OnClickListener {
 
     private CommentPagePresenter commentPagePresenter;
     private RecyclerView mPostCommentRecyclerView;
@@ -51,6 +53,7 @@ public class UserCommentActivity extends AppCompatActivity implements CommentPag
         mProgressBar = (ProgressBar) findViewById(R.id.progress_loader);
         mFavPostBtn = (Button) findViewById(R.id.fav_post_btn);
         noDataAvailable = (TextView) findViewById(R.id.no_data_present_tv);
+        mFavPostBtn.setOnClickListener(this);
 
         if (getIntent() != null) {
             mUserPostBean = getIntent().getParcelableExtra(USER_POST_DATA);
@@ -59,7 +62,7 @@ public class UserCommentActivity extends AppCompatActivity implements CommentPag
 
         setUpRecyclerView();
 
-        commentPagePresenter = new CommentPagePresenter(this);
+        commentPagePresenter = new CommentPagePresenter(this, UserCommentActivity.this);
         commentPagePresenter.requestUserCommentData(mUserPostBean.getPost_id());
 
     }
@@ -117,6 +120,37 @@ public class UserCommentActivity extends AppCompatActivity implements CommentPag
     @Override
     public void onResponseFailure(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void favPostRemoved() {
+        mUserPostBean.setMarkedFav(false);
+        mFavPostBtn.setTextColor(getResources().getColor(R.color.colorAccent));
+        mFavPostBtn.setBackgroundColor(getResources().getColor(R.color.colorWhite));
+
+    }
+
+    @Override
+    public void favPostAdded() {
+        mUserPostBean.setMarkedFav(true);
+        mFavPostBtn.setTextColor(getResources().getColor(R.color.colorWhite));
+        mFavPostBtn.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+
+    }
+
+    @Override
+    public void dbQueryFailed(String error) {
+        Toast.makeText(UserCommentActivity.this, error, Toast.LENGTH_SHORT).show();
+    }
+
+
+    @Override
+    public void onClick(View view) {
+        if (mUserPostBean.isMarkedFav()) {
+            commentPagePresenter.removeFavPost(mUserPostBean);
+        } else {
+            commentPagePresenter.addedFavPost(mUserPostBean);
+        }
     }
 
 }

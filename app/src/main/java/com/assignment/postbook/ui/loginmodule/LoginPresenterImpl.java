@@ -1,8 +1,6 @@
 package com.assignment.postbook.ui.loginmodule;
 
 import android.content.Context;
-import android.text.TextUtils;
-
 
 import com.assignment.postbook.R;
 import com.assignment.postbook.data.DataCallbackImp;
@@ -27,9 +25,10 @@ public class LoginPresenterImpl implements Presenter {
     }
 
     @Override
-    public void checkUserIDValidation(String userId) {
-        if (TextUtils.isEmpty(userId)) {
-            mLoginView.showErrorMessage(mContext.getString(R.string.enter_userid));
+    public void checkUserIDValidation() {
+        String userId = mLoginView.getUserId();
+        if (userId.isEmpty()) {
+            mLoginView.showUserIdError(R.string.enter_userid);
         } else {
             mLoginView.navigationToHomePage();
             mLoginView.setLogOutOption();

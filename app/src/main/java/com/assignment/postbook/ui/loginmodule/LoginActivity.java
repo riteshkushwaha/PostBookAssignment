@@ -78,7 +78,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
 
     @Override
     public void proceedForLogin() {
-        mLoginPresenter.checkUserIDValidation(mUserIdEditText.getText().toString());
+        mLoginPresenter.checkUserIDValidation();
     }
 
     @Override
@@ -95,6 +95,17 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
         mUserIdEditText.setVisibility(View.VISIBLE);
         mLoginBtn.setVisibility(View.VISIBLE);
         mLogoutBtn.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public String getUserId() {
+        return mUserIdEditText.getText().toString();
+    }
+
+    @Override
+    public void showUserIdError(int resId) {
+        Toast.makeText(LoginActivity.this, getString(resId), Toast.LENGTH_SHORT).show();
+
     }
 
 }

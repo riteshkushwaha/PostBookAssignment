@@ -51,7 +51,6 @@ public class UserFavPresenter implements UserFavPostContract.favPostPresenter {
                     @Override
                     public void onComplete() {
                         favPostView.postAddedAsFavSuccessfully(position);
-                        informAboutDeletePost(userPostBean);
                     }
 
                     @Override
@@ -79,6 +78,7 @@ public class UserFavPresenter implements UserFavPostContract.favPostPresenter {
                     @Override
                     public void onComplete() {
                         favPostView.deleteFavpostSuccessfully(position);
+
                     }
 
                     @Override

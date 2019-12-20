@@ -2,6 +2,7 @@ package com.assignment.postbook.ui.usercomment;
 
 
 import com.assignment.postbook.data.model.UserCommentBean;
+import com.assignment.postbook.data.model.UserPostBean;
 
 import java.util.List;
 
@@ -19,6 +20,12 @@ public interface CommentPageContract {
 
         void onResponseFailure(String msg);
 
+        void favPostRemoved();
+
+        void favPostAdded();
+
+        void dbQueryFailed(String error);
+
     }
 
     interface CommentPresenter {
@@ -26,6 +33,10 @@ public interface CommentPageContract {
         void requestUserCommentData(int postId);
 
         void rxUnsubscribe();
+
+        void removeFavPost(UserPostBean userPostBean);
+
+        void addedFavPost(UserPostBean userPostBean);
 
     }
 

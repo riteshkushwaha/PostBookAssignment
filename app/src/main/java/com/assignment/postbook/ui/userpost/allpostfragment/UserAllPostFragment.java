@@ -204,10 +204,10 @@ public class UserAllPostFragment extends Fragment implements UserPostFragContrac
 
     }
 
-    public void refreshUserPostDataList(UserPostBean userPostBean) {
+    public void setUserPostFavFlag(UserPostBean userPostBean) {
         for (UserPostBean userPost : mUserPostDataList) {
             if (userPost.getPost_id() == userPostBean.getPost_id()) {
-                userPost.setMarkedFav(false);
+                userPost.setMarkedFav(userPostBean.isMarkedFav());
             }
         }
         mUserPostFragAdapter.notifyDataSetChanged();

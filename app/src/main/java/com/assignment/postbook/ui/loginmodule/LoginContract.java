@@ -17,11 +17,16 @@ public interface LoginContract {
         void setLogOutOption();
 
         void setLoginOption();
+
+        String getUserId();
+
+        void showUserIdError(int resId);
+
     }
 
     interface Presenter {
 
-        void checkUserIDValidation(String userId);
+        void checkUserIDValidation();
 
         void checkNetworkStatus();
 

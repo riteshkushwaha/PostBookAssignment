@@ -1,6 +1,9 @@
 package com.assignment.postbook.ui.userpost;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -11,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.assignment.postbook.R;
 import com.assignment.postbook.data.model.UserPostBean;
@@ -22,6 +26,7 @@ import java.util.List;
 import static com.assignment.postbook.util.AppUtils.USER_ALLPOST_FRAGMENT;
 import static com.assignment.postbook.util.AppUtils.USER_FAVPOST_FRAGMENT;
 import static com.assignment.postbook.util.AppUtils.USER_ID;
+import static com.assignment.postbook.util.AppUtils.USER_MARK_POST;
 
 
 public class UserPostActivity extends AppCompatActivity implements OnClickListener, FavItemChangeListener {
@@ -153,13 +158,40 @@ public class UserPostActivity extends AppCompatActivity implements OnClickListen
                 enableFavPostButton();
             }
         }
+
     }
 
     @Override
     public void onFavItemChangeListener(UserPostBean userPostBean) {
         UserAllPostFragment userAllPostFragment =
                 (UserAllPostFragment) getSupportFragmentManager().findFragmentByTag(USER_ALLPOST_FRAGMENT);
-        userAllPostFragment.refreshUserPostDataList(userPostBean);
+        userAllPostFragment.setUserPostFavFlag(userPostBean);
     }
 
+    /**
+     * broadcast receiver for receive fav post changes
+     */
+    private BroadcastReceiver listener = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Bundle data = intent.getBundleExtra("USERDATA");
+            UserPostBean userPostBean = data.getParcelable(USER_MARK_POST);
+            UserAllPostFragment userAllPostFragment =
+                    (UserAllPostFragment) getSupportFragmentManager().findFragmentByTag(USER_ALLPOST_FRAGMENT);
+            userAllPostFragment.setUserPostFavFlag(userPostBean);
+        }
+    };
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        LocalBroadcastManager.getInstance(this).registerReceiver(
+                listener, new IntentFilter("user-mark-postfav"));
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(listener);
+    }
 }

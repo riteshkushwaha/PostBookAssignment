@@ -13,10 +13,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 
 import com.assignment.postbook.R;
 import com.assignment.postbook.data.model.UserPostBean;
@@ -121,7 +119,6 @@ public class UserFavPostFragment extends Fragment implements UserFavPostContract
         mFavPostRecyclerView = (RecyclerView) viewGroup.findViewById(R.id.fav_post_recyclerview);
         mFavPostRecyclerView.setHasFixedSize(true);
         mFavPostRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mFavPostRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
         mUserPostFragAdapter = new UserPostFragAdapter(mUserPostBeanList);
         mUserPostFragAdapter.setOnItemClickInterface(this);
@@ -169,6 +166,7 @@ public class UserFavPostFragment extends Fragment implements UserFavPostContract
 
     @Override
     public void deleteFavpostSuccessfully(int position) {
+        mUserPostBeanList.get(position).setMarkedFav(false);
         favItemChangeListener.onFavItemChangeListener(mUserPostBeanList.get(position));
         if (mUserPostBeanList.get(position) != null) {
             mUserPostBeanList.remove(position);
@@ -178,7 +176,7 @@ public class UserFavPostFragment extends Fragment implements UserFavPostContract
 
     @Override
     public void notifyFragment(UserPostBean userPostBean) {
-        onUserPostItemClicked(userPostBean);
+        //onUserPostItemClicked(userPostBean);
     }
 
     @Override
